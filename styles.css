@@ -891,8 +891,16 @@ input:focus {
   margin-top: 14px;
 }
 
+.source-library {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
 .blueprint-card,
 .framework-card,
+.source-card,
 .prompt-card {
   background: var(--surface-2);
   border: 1px solid var(--line);
@@ -936,6 +944,38 @@ input:focus {
   display: grid;
   gap: 8px;
   padding: 15px;
+}
+
+.source-card {
+  display: grid;
+  gap: 8px;
+  padding: 15px;
+  border-left: 4px solid var(--accent);
+}
+
+.source-card:nth-child(3n) {
+  border-left-color: var(--teal);
+}
+
+.source-card:nth-child(4n) {
+  border-left-color: var(--blue);
+}
+
+.source-card strong {
+  color: var(--ink);
+}
+
+.source-card span {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.45;
+}
+
+.source-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
 }
 
 .prompt-stack {
@@ -1022,6 +1062,7 @@ input:focus {
   .research-strip,
   .poster-blueprint,
   .framework-grid,
+  .source-library,
   .timeline {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1069,6 +1110,7 @@ input:focus {
   .research-strip,
   .poster-blueprint,
   .framework-grid,
+  .source-library,
   .report-grid,
   .timeline,
   .report-hero {

@@ -187,9 +187,25 @@
                   <span>关键功能热词</span>
                   <input id="answerFeatures" type="text" placeholder="例如：身份认证、玩具消毒、同城匹配、积分交换、亲子活动" />
                 </label>
-                <label class="field">
+  <label class="field">
                   <span>最需要规避的风险</span>
                   <input id="answerRisks" type="text" placeholder="例如：卫生安全、信任纠纷、履约成本、冷启动供给不足" />
+                </label>
+                <label class="field">
+                  <span>商业落地路径</span>
+                  <input id="answerGoToMarket" type="text" placeholder="例如：先做社区试点，再用亲子社群获客，最后扩展到城市合伙人" />
+                </label>
+                <label class="field">
+                  <span>启动预算与资金来源</span>
+                  <input id="answerBudget" type="text" placeholder="例如：前 3 个月预算 8-15 万；自筹为主，必要时找天使资金" />
+                </label>
+                <label class="field">
+                  <span>收入模型与关键成本</span>
+                  <input id="answerRevenue" type="text" placeholder="例如：订阅费、服务费、佣金；主要成本为获客、履约、人力和模型调用" />
+                </label>
+                <label class="field">
+                  <span>当前资源与约束</span>
+                  <input id="answerResources" type="text" placeholder="例如：有开发者和社群资源，但缺少线下履约团队和行业渠道" />
                 </label>
               </div>
               <button class="primary-button full" id="buildMapBtn" type="button">生成假设地图</button>
@@ -291,6 +307,10 @@
             <article class="report-block wide">
               <h3>Agent 追问框架</h3>
               <div class="framework-grid" id="questionFramework"></div>
+            </article>
+            <article class="report-block wide">
+              <h3>问题来源与后台咨询库</h3>
+              <div class="source-library" id="questionSources"></div>
             </article>
             <article class="report-block wide">
               <h3>平台预埋提示词</h3>

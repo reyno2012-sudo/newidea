@@ -38,7 +38,11 @@ const answerSelectors = [
   "#answerCompetitors",
   "#answerPersona",
   "#answerFeatures",
-  "#answerRisks"
+  "#answerRisks",
+  "#answerGoToMarket",
+  "#answerBudget",
+  "#answerRevenue",
+  "#answerResources"
 ];
 
 const $ = (selector) => document.querySelector(selector);
@@ -87,6 +91,9 @@ function renderAgentQuestions() {
     `用户在哪些场景里最需要这个产品？请给出 3 到 4 个场景，并估计优先级。`,
     `用户愿意为什么能力付费？你预期的价格区间和付费人是谁？`,
     `直接竞品、替代方案和用户“不用你”的理由分别是什么？`,
+    `你准备怎样落地第一批用户？获客渠道、交付方式和冷启动资源分别是什么？`,
+    `前 3 到 6 个月准备投入多少预算？钱主要花在产品、获客、履约、人力还是合规上？`,
+    `这个项目的收入模型、关键成本、毛利空间和回本周期分别如何假设？`,
     `最终报告要给谁看？合伙人、团队、投资人、客户，还是自己决策？`
   ];
 
@@ -129,6 +136,10 @@ function quickFillAnswers() {
     $("#answerPersona").value = "王奶奶，72岁，独居，子女在外地工作，使用智能手机1-2年，月收入3000-5000元";
     $("#answerFeatures").value = "陪伴聊天、用药提醒、紧急求助、医院陪护、生活辅助、依赖子女、记忆力减退";
     $("#answerRisks").value = "老人学习成本、AI 误判风险、医疗健康合规、紧急求助履约、子女付费转化";
+    $("#answerGoToMarket").value = "先在 2-3 个社区做人工陪伴+提醒试点，通过居委会、养老机构和子女社群获客";
+    $("#answerBudget").value = "前 3 个月预算 12-20 万：产品原型 4 万、用户访谈和试点 3 万、获客 3 万、客服和履约 5 万、合规预留 2 万";
+    $("#answerRevenue").value = "子女订阅费 + 陪护服务费 + 增值提醒包；关键成本为客服、履约、获客、模型调用和合规审核";
+    $("#answerResources").value = "已有产品和 AI 开发能力，缺少养老机构渠道、医疗合规顾问和线下履约伙伴";
     return;
   }
 
@@ -143,6 +154,10 @@ function quickFillAnswers() {
   $("#answerPersona").value = toyCase ? "重视安全和省心的年轻父母，愿意参加社区活动，对陌生交易有顾虑" : "独立开发者、产品经理、创业比赛参与者，需要快速判断方向";
   $("#answerFeatures").value = toyCase ? "同城匹配、玩具消毒、成色评级、社区活动、信用档案、亲子社群" : "Agent追问、证据引用、假设地图、竞品矩阵、评分维度、30天验证计划";
   $("#answerRisks").value = toyCase ? "信任纠纷、卫生安全、供需密度、履约成本、获客效率" : "模型编造、搜索来源质量、报告同质化、成本控制、用户付费意愿";
+  $("#answerGoToMarket").value = toyCase ? "先在 3 个亲子社区做线下交换活动，沉淀供需和信任规则，再扩展到小程序" : "先面向独立开发者社群和产品经理社群发布免费诊断，收集案例后转付费报告";
+  $("#answerBudget").value = toyCase ? "前 3 个月预算 5-10 万，主要用于活动组织、消毒/检测、社群运营和小程序原型" : "前 3 个月预算 3-8 万，主要用于模型调用、搜索 API、落地页投放和内容获客";
+  $("#answerRevenue").value = toyCase ? "会员费、活动服务费、交易佣金；关键成本是履约、获客、质检和社区运营" : "报告付费、订阅会员、团队版席位；关键成本是模型、搜索、存储和获客";
+  $("#answerResources").value = toyCase ? "有社区活动资源和产品开发能力，缺少标准化质检和稳定供给" : "有产品和内容能力，缺少真实案例库、搜索证据系统和渠道预算";
 }
 
 function collectAnswers() {
@@ -157,7 +172,11 @@ function collectAnswers() {
     competitors: $("#answerCompetitors").value.trim() || "直接竞品与替代方案待扫描",
     persona: $("#answerPersona").value.trim() || "核心用户画像待补全",
     features: $("#answerFeatures").value.trim() || "关键功能热词待提炼",
-    risks: $("#answerRisks").value.trim() || "风险清单待补充"
+    risks: $("#answerRisks").value.trim() || "风险清单待补充",
+    goToMarket: $("#answerGoToMarket").value.trim() || "商业落地路径待补充",
+    budget: $("#answerBudget").value.trim() || "启动预算与资金来源待估算",
+    revenue: $("#answerRevenue").value.trim() || "收入模型与关键成本待拆解",
+    resources: $("#answerResources").value.trim() || "当前资源与约束待确认"
   };
 }
 
@@ -215,6 +234,18 @@ function buildHypotheses() {
     {
       type: "证据来源",
       text: "每个关键结论都应绑定用户回答、公开搜索、访谈样本或平台推理标签。",
+      status: "unverified",
+      importance: "高"
+    },
+    {
+      type: "商业落地",
+      text: `落地路径假设：${state.answers.goToMarket}。`,
+      status: "unverified",
+      importance: "高"
+    },
+    {
+      type: "投资预算",
+      text: `预算假设：${state.answers.budget}。`,
       status: "unverified",
       importance: "高"
     }
@@ -288,6 +319,7 @@ function generateReport() {
   renderEvidence();
   renderPosterBlueprint();
   renderQuestionFramework();
+  renderQuestionSources();
   renderPromptStack();
   renderTimeline();
 }
@@ -346,6 +378,9 @@ function renderPosterBlueprint() {
     ["付费意愿分析", state.answers.payment, "价格测试 + 问卷"],
     ["竞品分析", competitorItems.join(" / "), "搜索 API + 应用商店/网站"],
     ["功能需求热度", featureItems.join(" / "), "痛点归因 + 高频词聚类"],
+    ["商业落地", state.answers.goToMarket, "GTM 拆解 + 渠道验证"],
+    ["投资预算", state.answers.budget, "预算模型 + 资金计划"],
+    ["收入与成本", state.answers.revenue, "单位经济模型"],
     ["方案对比", "方案 A / B / C 的壁垒、优势、周期、成本", "平台生成"],
     ["风险评估", riskItems.join(" / "), "反证搜索 + 约束识别"],
     ["下一步建议", "真人验证、MVP 细化、资源清单", "平台行动计划模板"]
@@ -371,6 +406,10 @@ function renderQuestionFramework() {
     ["付费与决策", "谁付费？为什么愿意付费？可接受价格区间是多少？购买阻力是什么？"],
     ["竞品与替代", "直接竞品是谁？替代方案是谁？用户为什么不用你？你比它们强在哪里？"],
     ["功能与价值", "哪些功能是必须有、可延后、可放弃？每个功能解决哪个痛点？"],
+    ["商业落地", "第一批用户从哪里来？用什么渠道触达？谁负责交付？从试点到规模化的路径是什么？"],
+    ["投资预算", "前 3-6 个月需要多少钱？产品、获客、履约、人力、合规分别花多少？资金来自哪里？"],
+    ["收入与成本", "收入模型是什么？CAC、LTV、毛利、回本周期和现金流压力如何假设？"],
+    ["资源与约束", "你已有团队、渠道、资金、行业资源是什么？缺口是什么？哪些缺口会卡住落地？"],
     ["风险与合规", "技术、市场、政策、履约、信任、数据隐私分别有什么风险？"],
     ["验证实验", "本周能做什么低成本实验？成功标准是什么？失败后如何调整？"]
   ];
@@ -381,6 +420,33 @@ function renderQuestionFramework() {
         <div class="framework-card">
           <strong>${escapeHtml(title)}</strong>
           <p>${escapeHtml(question)}</p>
+        </div>
+      `
+    )
+    .join("");
+}
+
+function renderQuestionSources() {
+  const sources = [
+    ["用户与场景", "Jobs To Be Done、用户访谈、服务蓝图", "确认谁在什么场景下为什么需要它。"],
+    ["痛点与频率", "Problem-Solution Fit、5 Whys、痛点强度评分", "区分真实高频痛点和泛泛需求。"],
+    ["市场与趋势", "TAM/SAM/SOM、搜索趋势、行业报告、社媒声量", "判断是否有足够市场空间和增长信号。"],
+    ["竞品与替代", "竞品矩阵、替代方案分析、波特五力", "识别现有解决方案和差异化空间。"],
+    ["付费与价格", "Van Westendorp 价格敏感度、支付意愿测试", "确认谁付费、为何付费、愿意付多少。"],
+    ["商业落地", "Go-To-Market、AARRR、冷启动策略、渠道漏斗", "规划第一批用户、获客路径和交付方式。"],
+    ["投资预算", "精益创业、Runway、预算分配、现金流模型", "估算启动资金、烧钱速度和资金缺口。"],
+    ["单位经济", "CAC、LTV、毛利率、回本周期、贡献利润", "判断商业模式能不能长期成立。"],
+    ["风险与合规", "Pre-mortem、反证清单、监管扫描、数据安全", "提前发现会让项目失败的关键约束。"],
+    ["验证实验", "MVP、Landing Page Test、访谈/问卷/投放实验", "把报告结论变成下一步可执行动作。"]
+  ];
+
+  $("#questionSources").innerHTML = sources
+    .map(
+      ([topic, source, purpose]) => `
+        <div class="source-card">
+          <strong>${escapeHtml(topic)}</strong>
+          <span>${escapeHtml(source)}</span>
+          <p>${escapeHtml(purpose)}</p>
         </div>
       `
     )
@@ -401,6 +467,18 @@ function renderPromptStack() {
     [
       "评分计算 Prompt",
       "用 6 个维度打分：市场需求、用户痛点、商业价值、竞品情况、技术可行性、增长潜力。每个维度给 0-100 分、理由、证据状态和待验证点。"
+    ],
+    [
+      "商业落地追问 Prompt",
+      "继续追问用户的 Go-To-Market：首批用户来源、渠道成本、销售路径、交付流程、合作伙伴、冷启动方式、从试点到规模化的关键瓶颈。每个答案都要转成可验证假设。"
+    ],
+    [
+      "投资预算测算 Prompt",
+      "拆解前 3-6 个月预算：产品研发、模型/API、市场投放、销售、人力、履约、法务合规、备用金。输出最低可行预算、标准预算、激进预算，以及对应 runway 和失败风险。"
+    ],
+    [
+      "单位经济模型 Prompt",
+      "基于用户输入和行业假设，估算 CAC、客单价、毛利率、LTV、回本周期和现金流压力。凡没有证据的数据必须标记为假设，并给出验证方法。"
     ],
     [
       "报告海报生成 Prompt",
@@ -463,7 +541,7 @@ function resetApp() {
   `;
   state.hypotheses = [];
   $("#hypothesisGrid").innerHTML = "";
-  ["#posterBlueprint", "#questionFramework", "#promptStack"].forEach((selector) => {
+  ["#posterBlueprint", "#questionFramework", "#questionSources", "#promptStack"].forEach((selector) => {
     const node = $(selector);
     if (node) node.innerHTML = "";
   });
