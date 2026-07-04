@@ -280,6 +280,10 @@ button {
   line-height: 1.65;
 }
 
+.compact-copy {
+  font-size: 13px;
+}
+
 .workspace {
   display: grid;
   align-content: start;
@@ -614,6 +618,23 @@ input:focus {
   align-content: start;
 }
 
+.question-pack {
+  display: grid;
+  gap: 12px;
+  margin-top: 4px;
+  padding: 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.question-pack-title {
+  margin: 0;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 900;
+}
+
 .answer-card-header {
   display: flex;
   align-items: center;
@@ -863,6 +884,83 @@ input:focus {
   margin-top: 14px;
 }
 
+.poster-blueprint {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.blueprint-card,
+.framework-card,
+.prompt-card {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.blueprint-card {
+  display: grid;
+  gap: 8px;
+  min-height: 142px;
+  padding: 15px;
+}
+
+.blueprint-card strong,
+.framework-card strong {
+  color: var(--ink);
+}
+
+.blueprint-card span,
+.framework-card p,
+.prompt-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.58;
+}
+
+.blueprint-card small {
+  align-self: end;
+  color: var(--faint);
+  line-height: 1.45;
+}
+
+.framework-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.framework-card {
+  display: grid;
+  gap: 8px;
+  padding: 15px;
+}
+
+.prompt-stack {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.prompt-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.prompt-card summary {
+  min-height: 48px;
+  padding: 14px 16px;
+  color: var(--ink);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.prompt-card p {
+  padding: 0 16px 16px;
+}
+
 .timeline-step {
   padding: 16px;
   background: var(--surface-2);
@@ -922,6 +1020,8 @@ input:focus {
   .idea-meta-grid,
   .hypothesis-grid,
   .research-strip,
+  .poster-blueprint,
+  .framework-grid,
   .timeline {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -967,6 +1067,8 @@ input:focus {
   .idea-meta-grid,
   .hypothesis-grid,
   .research-strip,
+  .poster-blueprint,
+  .framework-grid,
   .report-grid,
   .timeline,
   .report-hero {

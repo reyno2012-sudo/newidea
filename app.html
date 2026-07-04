@@ -95,9 +95,9 @@
           </label>
 
           <div class="prompt-row" aria-label="示例想法">
+            <button class="prompt-chip" data-example="我想做一个老人陪伴生活辅助平台，为独居或半独居老人提供陪伴聊天、用药提醒、医院陪护提醒、生活辅助和紧急求助服务。">老人陪伴生活辅助</button>
             <button class="prompt-chip" data-example="我想做一个面向年轻父母的儿童旧玩具交换平台，通过社区活动和会员服务盈利，这个方向是否值得做？">儿童旧玩具交换平台</button>
             <button class="prompt-chip" data-example="我想做一个帮助大学生寻找短期兼职的 AI 平台，根据技能、时间和地点自动匹配兼职机会。">大学生兼职 AI 平台</button>
-            <button class="prompt-chip" data-example="我想做一个给独立开发者用的出海 SaaS 冷启动增长工具，自动生成落地页实验和渠道测试计划。">独立开发者增长工具</button>
           </div>
 
           <div class="idea-meta-grid">
@@ -144,6 +144,7 @@
                 <h3>你的补充</h3>
                 <button class="ghost-button small" id="quickAnswerBtn" type="button">快速填充</button>
               </div>
+              <p class="helper-text compact-copy">这些问题会决定最终报告海报里的评分、图表、画像、竞品和下一步建议。</p>
               <label class="field">
                 <span>目标用户是谁？</span>
                 <input id="answerUser" type="text" placeholder="例如：25-38 岁的一二线城市年轻父母" />
@@ -160,6 +161,37 @@
                 <span>你最想验证什么？</span>
                 <input id="answerValidation" type="text" placeholder="例如：家长是否愿意把玩具拿出来交换并付费" />
               </label>
+              <div class="question-pack">
+                <p class="question-pack-title">报告海报字段</p>
+                <label class="field">
+                  <span>用户痛点 TOP 5</span>
+                  <textarea id="answerPains" rows="3" placeholder="例如：闲置无处处理；担心卫生安全；不信任陌生交易；玩具价格高；孩子兴趣变化快"></textarea>
+                </label>
+                <label class="field">
+                  <span>主要使用场景与占比</span>
+                  <input id="answerScenes" type="text" placeholder="例如：社区交换45%，亲友转赠25%，二手平台20%，线下活动10%" />
+                </label>
+                <label class="field">
+                  <span>付费意愿与价格区间</span>
+                  <input id="answerPayment" type="text" placeholder="例如：月费19-49元；愿为消毒、配送、活动组织付费" />
+                </label>
+                <label class="field">
+                  <span>直接竞品或替代方案</span>
+                  <input id="answerCompetitors" type="text" placeholder="例如：闲鱼、社区团购群、亲子活动机构、线下跳蚤市场" />
+                </label>
+                <label class="field">
+                  <span>用户画像关键特征</span>
+                  <input id="answerPersona" type="text" placeholder="例如：二孩家庭、重视安全、时间紧、希望省钱但更在意信任" />
+                </label>
+                <label class="field">
+                  <span>关键功能热词</span>
+                  <input id="answerFeatures" type="text" placeholder="例如：身份认证、玩具消毒、同城匹配、积分交换、亲子活动" />
+                </label>
+                <label class="field">
+                  <span>最需要规避的风险</span>
+                  <input id="answerRisks" type="text" placeholder="例如：卫生安全、信任纠纷、履约成本、冷启动供给不足" />
+                </label>
+              </div>
               <button class="primary-button full" id="buildMapBtn" type="button">生成假设地图</button>
             </div>
           </div>
@@ -251,6 +283,18 @@
             <article class="report-block wide">
               <h3>证据状态</h3>
               <div class="evidence-table" id="evidenceTable"></div>
+            </article>
+            <article class="report-block wide">
+              <h3>可视化报告海报蓝图</h3>
+              <div class="poster-blueprint" id="posterBlueprint"></div>
+            </article>
+            <article class="report-block wide">
+              <h3>Agent 追问框架</h3>
+              <div class="framework-grid" id="questionFramework"></div>
+            </article>
+            <article class="report-block wide">
+              <h3>平台预埋提示词</h3>
+              <div class="prompt-stack" id="promptStack"></div>
             </article>
             <article class="report-block wide">
               <h3>下一步 30 天验证计划</h3>
