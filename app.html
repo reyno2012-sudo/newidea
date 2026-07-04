@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NewIdea Validation Workspace</title>
+    <link rel="icon" type="image/png" href="./assets/images/newidea-logo.png" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="项目导航">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <img src="./assets/images/newidea-logo.png" alt="" />
+          </div>
+          <div>
+            <p class="brand-name">NewIdea</p>
+            <p class="brand-subtitle">商业灵感验证 Agent</p>
+          </div>
+        </div>
+
+        <nav class="steps" aria-label="验证流程">
+          <button class="step is-active" data-step-jump="idea">
+            <span class="step-index">01</span>
+            <span>
+              <strong>输入想法</strong>
+              <small>描述商业灵感与疑问</small>
+            </span>
+          </button>
+          <button class="step" data-step-jump="dialogue">
+            <span class="step-index">02</span>
+            <span>
+              <strong>Agent 追问</strong>
+              <small>补全关键信息缺口</small>
+            </span>
+          </button>
+          <button class="step" data-step-jump="map">
+            <span class="step-index">03</span>
+            <span>
+              <strong>假设地图</strong>
+              <small>确认哪些事必须验证</small>
+            </span>
+          </button>
+          <button class="step" data-step-jump="report">
+            <span class="step-index">04</span>
+            <span>
+              <strong>报告页</strong>
+              <small>决策建议与行动计划</small>
+            </span>
+          </button>
+        </nav>
+
+        <div class="mode-panel">
+          <p class="eyebrow">研究模式</p>
+          <div class="segmented" role="group" aria-label="选择研究模式">
+            <button class="is-selected" data-mode="quick">快速</button>
+            <button data-mode="standard">标准</button>
+            <button data-mode="deep">深度</button>
+          </div>
+          <p class="mode-copy" id="modeCopy">3 分钟形成第一版判断，适合刚冒出来的想法。</p>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">MVP 主链路</p>
+            <h1>别急着做 MVP，先验证这个想法值不值得做</h1>
+            <div class="topbar-metrics" aria-label="当前项目概览">
+              <span><strong>4</strong> 验证阶段</span>
+              <span><strong>6</strong> 关键假设</span>
+              <span><strong>30 天</strong> 行动计划</span>
+            </div>
+          </div>
+          <div class="topbar-actions">
+            <button class="ghost-button" id="resetBtn" type="button">重置</button>
+            <button class="primary-button" id="demoBtn" type="button">填入示例</button>
+          </div>
+        </header>
+
+        <section class="panel active-panel" id="ideaPanel" data-panel="idea" aria-labelledby="ideaTitle">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Step 01</p>
+              <h2 id="ideaTitle">输入一个商业想法</h2>
+              <p class="section-copy">用自然语言写就行。Agent 会先找信息缺口，不会直接生成大段报告。</p>
+            </div>
+            <span class="status-pill">草稿中</span>
+          </div>
+
+          <label class="field">
+            <span>商业灵感</span>
+            <textarea id="ideaInput" rows="7" placeholder="例如：我想做一个面向年轻父母的儿童旧玩具交换平台，通过社区活动和会员服务盈利，这个方向是否值得做？"></textarea>
+          </label>
+
+          <div class="prompt-row" aria-label="示例想法">
+            <button class="prompt-chip" data-example="我想做一个面向年轻父母的儿童旧玩具交换平台，通过社区活动和会员服务盈利，这个方向是否值得做？">儿童旧玩具交换平台</button>
+            <button class="prompt-chip" data-example="我想做一个帮助大学生寻找短期兼职的 AI 平台，根据技能、时间和地点自动匹配兼职机会。">大学生兼职 AI 平台</button>
+            <button class="prompt-chip" data-example="我想做一个给独立开发者用的出海 SaaS 冷启动增长工具，自动生成落地页实验和渠道测试计划。">独立开发者增长工具</button>
+          </div>
+
+          <div class="idea-meta-grid">
+            <label class="field compact">
+              <span>地区</span>
+              <input id="marketInput" type="text" value="中国一线和新一线城市" />
+            </label>
+            <label class="field compact">
+              <span>产品形式</span>
+              <input id="formatInput" type="text" value="Web / 小程序" />
+            </label>
+            <label class="field compact">
+              <span>最大疑问</span>
+              <input id="doubtInput" type="text" value="需求是否真实，是否已有强竞品" />
+            </label>
+          </div>
+
+          <div class="panel-footer">
+            <p class="helper-text">输出会区分事实、推测与待验证假设。</p>
+            <button class="primary-button" id="startBtn" type="button">开始 Agent 追问</button>
+          </div>
+        </section>
+
+        <section class="panel" id="dialoguePanel" data-panel="dialogue" aria-labelledby="dialogueTitle">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Step 02</p>
+              <h2 id="dialogueTitle">Agent 追问</h2>
+              <p class="section-copy">一次只问少量关键问题。回答不完整时，系统会标记为待验证。</p>
+            </div>
+            <span class="status-pill warning">补信息</span>
+          </div>
+
+          <div class="chat-layout">
+            <div class="chat-stream" id="chatStream" aria-live="polite">
+              <div class="empty-state">
+                <span class="empty-icon" aria-hidden="true"></span>
+                <p>输入想法后，Agent 会在这里提出 3 到 5 个关键追问。</p>
+              </div>
+            </div>
+
+            <div class="answer-card">
+              <div class="answer-card-header">
+                <h3>你的补充</h3>
+                <button class="ghost-button small" id="quickAnswerBtn" type="button">快速填充</button>
+              </div>
+              <label class="field">
+                <span>目标用户是谁？</span>
+                <input id="answerUser" type="text" placeholder="例如：25-38 岁的一二线城市年轻父母" />
+              </label>
+              <label class="field">
+                <span>用户现在怎么解决？</span>
+                <input id="answerAlternative" type="text" placeholder="例如：二手平台、亲友转赠、闲置群" />
+              </label>
+              <label class="field">
+                <span>你的方案有什么不同？</span>
+                <input id="answerDiff" type="text" placeholder="例如：本地社区活动、玩具状态标准化、信任机制" />
+              </label>
+              <label class="field">
+                <span>你最想验证什么？</span>
+                <input id="answerValidation" type="text" placeholder="例如：家长是否愿意把玩具拿出来交换并付费" />
+              </label>
+              <button class="primary-button full" id="buildMapBtn" type="button">生成假设地图</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="mapPanel" data-panel="map" aria-labelledby="mapTitle">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Step 03</p>
+              <h2 id="mapTitle">项目假设地图</h2>
+              <p class="section-copy">把商业判断拆成可验证的关键假设，并标记重要性与证据状态。</p>
+            </div>
+            <span class="status-pill success">可确认</span>
+          </div>
+
+          <div class="map-toolbar">
+            <div>
+              <p class="toolbar-title" id="mapProjectName">未命名项目</p>
+              <p class="helper-text">点击卡片可切换“未验证 / 部分验证 / 已确认”。</p>
+            </div>
+            <button class="ghost-button" id="addHypothesisBtn" type="button">添加假设</button>
+          </div>
+
+          <div class="hypothesis-grid" id="hypothesisGrid"></div>
+
+          <div class="research-strip" aria-label="研究任务拆解">
+            <div>
+              <span class="task-dot"></span>
+              <strong>竞品扫描</strong>
+              <small>找直接竞品与替代方案</small>
+            </div>
+            <div>
+              <span class="task-dot"></span>
+              <strong>用户痛点</strong>
+              <small>识别真实抱怨与现有成本</small>
+            </div>
+            <div>
+              <span class="task-dot"></span>
+              <strong>付费意愿</strong>
+              <small>拆解谁付费、为什么付费</small>
+            </div>
+            <div>
+              <span class="task-dot"></span>
+              <strong>第一轮实验</strong>
+              <small>设计可执行验证动作</small>
+            </div>
+          </div>
+
+          <div class="panel-footer">
+            <p class="helper-text">真实版本会在这里启动搜索 API 与证据采集队列。</p>
+            <button class="primary-button" id="generateReportBtn" type="button">生成报告页</button>
+          </div>
+        </section>
+
+        <section class="panel" id="reportPanel" data-panel="report" aria-labelledby="reportTitle">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Step 04</p>
+              <h2 id="reportTitle">商业可行性报告</h2>
+              <p class="section-copy">不是给出确定答案，而是告诉你现在最应该验证什么。</p>
+            </div>
+            <div class="report-actions">
+              <button class="ghost-button" id="printBtn" type="button">导出 PDF</button>
+              <button class="ghost-button" id="pptBtn" type="button">生成 PPT 摘要</button>
+            </div>
+          </div>
+
+          <div class="report-hero">
+            <div>
+              <p class="decision-label">建议验证后推进</p>
+              <h3 id="reportProjectTitle">商业想法初步判断</h3>
+              <p id="reportSummary">完成输入与追问后，这里会生成项目摘要。</p>
+            </div>
+            <div class="score-ring" aria-label="可行性评分">
+              <span id="scoreValue">72</span>
+              <small>可行性</small>
+            </div>
+          </div>
+
+          <div class="report-grid">
+            <article class="report-block">
+              <h3>核心结论</h3>
+              <ul id="conclusionList"></ul>
+            </article>
+            <article class="report-block">
+              <h3>最大风险</h3>
+              <ul id="riskList"></ul>
+            </article>
+            <article class="report-block wide">
+              <h3>证据状态</h3>
+              <div class="evidence-table" id="evidenceTable"></div>
+            </article>
+            <article class="report-block wide">
+              <h3>下一步 30 天验证计划</h3>
+              <div class="timeline" id="timeline"></div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>
